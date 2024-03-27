@@ -1,0 +1,282 @@
+{
+  "0": {
+    "day": {
+      "description": "Sunny",
+      "icon": "src/assets/icons/clear-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Clear",
+      "icon": "src/assets/icons/sunny-night-svgrepo-com.svg"
+    }
+  },
+  "1": {
+    "day": {
+      "description": "Mainly Sunny",
+      "icon": "src/assets/icons/clear-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Mainly Clear",
+      "icon": "src/assets/icons/sunny-night-svgrepo-com.svg"
+    }
+  },
+  "2": {
+    "day": {
+      "description": "Partly Cloudy",
+      "icon": "src/assets/icons/partly-cloudy-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Partly Cloudy",
+      "icon": "src/assets/icons/cloudy-night-svgrepo-com.svg"
+    }
+  },
+  "3": {
+    "day": {
+      "description": "Cloudy",
+      "icon": "src/assets/icons/negative-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Cloudy",
+      "icon": "src/assets/icons/negative-svgrepo-com.svg"
+    }
+  },
+  "45": {
+    "day": {
+      "description": "Foggy",
+      "icon": "src/assets/icons/fog-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Foggy",
+      "icon": "src/assets/icons/night-fog-svgrepo-com.svg"
+    }
+  },
+  "48": {
+    "day": {
+      "description": "Rime Fog",
+      "icon": "src/assets/icons/fog-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Rime Fog",
+      "icon": "src/assets/icons/night-fog-svgrepo-com.svg"
+    }
+  },
+  "51": {
+    "day": {
+      "description": "Light Drizzle",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Light Drizzle",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    }
+  },
+  "53": {
+    "day": {
+      "description": "Drizzle",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Drizzle",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    }
+  },
+  "55": {
+    "day": {
+      "description": "Heavy Drizzle",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Heavy Drizzle",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    }
+  },
+  "56": {
+    "day": {
+      "description": "Light Freezing Drizzle",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Light Freezing Drizzle",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    }
+  },
+  "57": {
+    "day": {
+      "description": "Freezing Drizzle",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Freezing Drizzle",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    }
+  },
+  "61": {
+    "day": {
+      "description": "Light Rain",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Light Rain",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    }
+  },
+  "63": {
+    "day": {
+      "description": "Rain",
+      "icon": "src/assets/icons/moderate-rain-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Rain",
+      "icon": "src/assets/icons/moderate-rain-svgrepo-com.svg"
+    }
+  },
+  "65": {
+    "day": {
+      "description": "Heavy Rain",
+      "icon": "src/assets/icons/heavy-rain-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Heavy Rain",
+      "icon": "src/assets/icons/heavy-rain-svgrepo-com.svg"
+    }
+  },
+  "66": {
+    "day": {
+      "description": "Light Freezing Rain",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Light Freezing Rain",
+      "icon": "src/assets/icons/light-rain-svgrepo-com.svg"
+    }
+  },
+  "67": {
+    "day": {
+      "description": "Freezing Rain",
+      "icon": "src/assets/icons/moderate-rain-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Freezing Rain",
+      "icon": "src/assets/icons/moderate-rain-svgrepo-com.svg"
+    }
+  },
+  "71": {
+    "day": {
+      "description": "Light Snow",
+      "icon": "src/assets/icons/light-snow-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Light Snow",
+      "icon": "src/assets/icons/light-snow-svgrepo-com.svg"
+    }
+  },
+  "73": {
+    "day": {
+      "description": "Snow",
+      "icon": "src/assets/icons/moderate-snow-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Snow",
+      "icon": "src/assets/icons/moderate-snow-svgrepo-com.svg"
+    }
+  },
+  "75": {
+    "day": {
+      "description": "Heavy Snow",
+      "icon": "src/assets/icons/heavy-snow-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Heavy Snow",
+      "icon": "src/assets/icons/heavy-snow-svgrepo-com.svg"
+    }
+  },
+  "77": {
+    "day": {
+      "description": "Snow Grains",
+      "icon": "src/assets/icons/heavy-snow-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Snow Grains",
+      "icon": "src/assets/icons/heavy-snow-svgrepo-com.svg"
+    }
+  },
+  "80": {
+    "day": {
+      "description": "Light Showers",
+      "icon": "src/assets/icons/shower-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Light Showers",
+      "icon": "src/assets/icons/night-showers-svgrepo-com.svg"
+    }
+  },
+  "81": {
+    "day": {
+      "description": "Showers",
+      "icon": "src/assets/icons/shower-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Showers",
+      "icon": "src/assets/icons/night-showers-svgrepo-com.svg"
+    }
+  },
+  "82": {
+    "day": {
+      "description": "Heavy Showers",
+      "icon": "src/assets/icons/shower-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Heavy Showers",
+      "icon": "src/assets/icons/night-showers-svgrepo-com.svg"
+    }
+  },
+  "85": {
+    "day": {
+      "description": "Light Snow Showers",
+      "icon": "src/assets/icons/snow-showers-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Light Snow Showers",
+      "icon": "src/assets/icons/snow-showers-at-night-svgrepo-com.svg"
+    }
+  },
+  "86": {
+    "day": {
+      "description": "Snow Showers",
+      "icon": "src/assets/icons/snow-showers-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Snow Showers",
+      "icon": "src/assets/icons/snow-showers-at-night-svgrepo-com.svg"
+    }
+  },
+  "95": {
+    "day": {
+      "description": "Thunderstorm",
+      "icon": "src/assets/icons/thunderstorm-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Thunderstorm",
+      "icon": "src/assets/icons/thunderstorm-svgrepo-com.svg"
+    }
+  },
+  "96": {
+    "day": {
+      "description": "Light Thunderstorms With Hail",
+      "icon": "src/assets/icons/thunderstorm-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Light Thunderstorms With Hail",
+      "icon": "src/assets/icons/thunderstorm-svgrepo-com.svg"
+    }
+  },
+  "99": {
+    "day": {
+      "description": "Thunderstorm With Hail",
+      "icon": "src/assets/icons/thunderstorm-svgrepo-com.svg"
+    },
+    "night": {
+      "description": "Thunderstorm With Hail",
+      "icon": "src/assets/icons/thunderstorm-svgrepo-com.svg"
+    }
+  }
+}
