@@ -84,6 +84,7 @@ main {
   flex-direction: column;
   align-items: stretch;
   justify-content: space-evenly;
+  text-wrap: nowrap;
   flex-grow: 1;
 }
 .current-temp {
@@ -100,6 +101,7 @@ main {
 
 .current-wrapper .icon {
   max-width: var(--size-12);
+  min-width: var(--size-9);
 }
 
 .card {
