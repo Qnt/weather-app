@@ -71,16 +71,6 @@ main {
   text-indent: var(--size-5);
 }
 
-.search-form button {
-  display: none;
-  position: absolute;
-  right: var(--size-2);
-  bottom: var(--size-2);
-  border: transparent;
-  background: none;
-  border-radius: var(--radius-round);
-}
-
 .current-wrapper {
   display: flex;
   flex-direction: row;
