@@ -25,21 +25,24 @@
           </label>
         </form>
       </section>
-      <section id="current-section">
+      <section id="current-section" data-current-section>
         <div class="current-wrapper">
           <div class="temp">
-            <h1 class="current-temp">18&deg;</h1>
-            <p class="wmo-descr">Partly cloudy</p>
-            <p class="apparent-temp">Feels like <span>18</span>&deg;</p>
+            <h1 class="current-temp"><span data-temp>18</span>&deg;</h1>
+            <p class="wmo-descr" data-descr>Partly cloudy</p>
+            <p class="apparent-temp">
+              Feels like <span data-apparent-temp>18</span>&deg;
+            </p>
           </div>
           <img
             src="./src/assets/icons/partly-cloudy-svgrepo-com.svg"
             alt="partly cloudy icon"
             class="icon"
+            data-icon
           />
         </div>
       </section>
-      <section id="hourly-section">
+      <section id="hourly-section" data-hourly-section>
         <div class="card">
           <div class="hourly">
             <div class="time"><p>12:00</p></div>
@@ -177,7 +180,7 @@
           </div>
         </div>
       </section>
-      <section id="daily-section">
+      <section id="daily-section" data-daily-section>
         <!-- <div class="card"></div> -->
       </section>
       <section id="current-other-section"></section>

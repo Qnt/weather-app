@@ -1,29 +1,39 @@
-import { getGeolocationData, getWeatherData } from './api.js';
+import getWeatherData from './api.js';
+import { getDescription, getIcon } from './weather-codes.js';
 
-const search = async event => {
-  const cityName = event.target.value.trim().toLowerCase();
-  if (!cityName) {
-    console.log('Enter a city');
-    return;
-  }
-  const geoData = await getGeolocationData(cityName);
-  if (!geoData.results) {
-    console.log('No geodata!');
-    return;
-    //TODO propper handling
-  }
-  const lat = geoData.results[0].latitude;
-  const lon = geoData.results[0].longitude;
-  const weatherData = await getWeatherData(lat, lon);
-  console.log(weatherData);
+const render = async weatherData => {
+  renderCurrentSection(weatherData.current);
 };
 
-const init = () => {
+const renderCurrentSection = data => {
+  const sectionEl = document.querySelector('[data-current-section]');
+  const descr = getDescription(data.weatherCode);
+  const icon = getIcon(data.weatherCode, data.isDay);
+  sectionEl.querySelector('[data-icon]').setAttribute('src', icon);
+  setValue(sectionEl, '[data-temp]', data.temp);
+  setValue(sectionEl, '[data-descr]', descr);
+  setValue(sectionEl, '[data-apparent-temp]', data.apparentTemp);
+};
+
+const setValue = (parent, dataAttr, value) => {
+  const el = parent.querySelector(dataAttr);
+  el.textContent = value;
+};
+
+const init = async () => {
   const searchInputEl = document.querySelector('#search-input');
-  searchInputEl.addEventListener('keydown', event => {
+  searchInputEl.addEventListener('keydown', async event => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      search(event);
+      const cityName = event.target.value.trim().toLowerCase();
+      if (!cityName) {
+        console.log('Enter city');
+        return;
+      }
+      const weatherData = await getWeatherData(cityName);
+
+      console.log(weatherData);
+      render(weatherData);
     }
   });
 };
