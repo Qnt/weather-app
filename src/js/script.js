@@ -1,9 +1,20 @@
 import getWeatherData from './api.js';
 import { getDescription, getIcon } from './weather-codes.js';
 
+const dayNames = new Map();
+
+dayNames.set(0, 'Sunday');
+dayNames.set(1, 'Monday');
+dayNames.set(2, 'Tuesday');
+dayNames.set(3, 'Wednesday');
+dayNames.set(4, 'Thursday');
+dayNames.set(5, 'Friday');
+dayNames.set(6, 'Saturday');
+
 const render = async weatherData => {
   renderCurrentSection(weatherData.current);
   renderHourlySection(weatherData.hourly);
+  renderDailySection(weatherData.daily);
 };
 
 const renderCurrentSection = data => {
@@ -29,6 +40,25 @@ const renderHourlySection = data => {
     setValue(sectionEl, `[data-temp-${i}]`, hour.temp);
     setValue(sectionEl, `[data-precip-${i}]`, hour.precipitation);
   });
+};
+
+const renderDailySection = data => {
+  const sectionEl = document.querySelector('[data-daily-section]');
+
+  data.forEach((day, i) => {
+    const icon = getIcon(day.weatherCode);
+    sectionEl.querySelector(`[data-icon-${i}]`).setAttribute('src', icon);
+    const dayName = i === 0 ? 'Today' : getDayName(day.time);
+    setValue(sectionEl, `[data-day-${i}]`, dayName);
+    setValue(sectionEl, `[data-precip-${i}]`, day.precipitation);
+    setValue(sectionEl, `[data-temp-max-${i}]`, day.tempMax);
+    setValue(sectionEl, `[data-temp-min-${i}]`, day.tempMin);
+  });
+};
+
+const getDayName = date => {
+  const dayCode = date.getDay();
+  return dayNames.get(dayCode);
 };
 
 const setValue = (parent, dataAttr, value) => {

@@ -91,6 +91,7 @@ main {
   text-wrap: nowrap;
   flex-grow: 1;
 }
+
 .current-temp {
   font-size: var(--font-size-8);
 }
@@ -101,8 +102,8 @@ main {
 }
 
 .current-wrapper .icon {
-  max-width: var(--size-12);
-  min-width: var(--size-9);
+  max-width: var(--size-11);
+  /* min-width: var(--size-10); */
 }
 
 .card {
@@ -123,8 +124,9 @@ main {
   overflow-x: scroll;
 }
 
-.hourly img {
-  width: var(--size-7);
+.hourly img,
+.daily img {
+  max-width: var(--size-fluid-3);
 }
 
 .hourly .time {
@@ -133,12 +135,14 @@ main {
   color: var(--blue-2);
 }
 
-.hourly .temp {
+.hourly .temp,
+.daily .temp {
   font-size: var(--font-size-3);
   font-weight: var(--font-weight-7);
 }
 
-.precip {
+.hourly .precip,
+.daily .precip {
   font-size: var(--font-size-0);
   font-weight: var(--font-weight-3);
   color: var(--blue-2);
@@ -154,4 +158,18 @@ main {
   background-size: contain;
   width: 0.8rem;
   height: 0.8rem;
+}
+
+.daily {
+  display: grid;
+  justify-content: start;
+  justify-items: center;
+  align-items: center;
+  gap: var(--size-3) var(--size-2);
+  grid-template-rows: repeat(7, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.day {
+  justify-self: start;
 }

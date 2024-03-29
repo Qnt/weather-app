@@ -103,13 +103,13 @@ const adaptWeatherData = data => {
     }),
     daily: daily.time.map((time, i) => {
       return {
-        time,
+        time: new Date(time),
         tempMax: Math.round(daily.temperature_2m_max[i]),
         tempMin: Math.round(daily.temperature_2m_min[i]),
         precipitation: Math.round(daily.precipitation_probability_max[i]),
         sunrise: daily.sunrise[i],
         sunset: daily.sunset[i],
-        weatherCode: daily.weather_code,
+        weatherCode: daily.weather_code[i],
       };
     }),
   };

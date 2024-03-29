@@ -204,7 +204,7 @@ const getDescription = code => {
   return weatherCodes[code].description;
 };
 
-const getIcon = (code, isDay) => {
+const getIcon = (code, isDay = 1) => {
   if (!Object.hasOwn(weatherCodes, code)) {
     return;
   }
