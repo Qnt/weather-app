@@ -14,6 +14,7 @@ const WEATHER_QUERY_PARAMS = {
     'relative_humidity_2m',
     'precipitation_probability',
     'weather_code',
+    'is_day',
   ],
   daily: [
     'weather_code',
@@ -97,6 +98,7 @@ const adaptWeatherData = data => {
         apparentTemp: Math.round(hourly.apparent_temperature[i]),
         precipitation: Math.round(hourly.precipitation_probability[i]),
         weatherCode: hourly.weather_code[i],
+        isDay: hourly.is_day[i],
       };
     }),
     daily: daily.time.map((time, i) => {

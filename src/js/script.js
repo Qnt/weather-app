@@ -18,9 +18,11 @@ const renderCurrentSection = data => {
 
 const renderHourlySection = data => {
   const sectionEl = document.querySelector('[data-hourly-section]');
-  // const icon = getIcon(data.weatherCode, data.isDay);
 
   data.forEach((hour, i) => {
+    const icon = getIcon(hour.weatherCode, hour.isDay);
+    sectionEl.querySelector(`[data-icon-${i}]`).setAttribute('src', icon);
+
     const hourValue = hour.time.getHours().toString();
     const timeValue = `${hourValue.padStart(2, '0')}:00`;
     setValue(sectionEl, `[data-time-${i}]`, timeValue);
