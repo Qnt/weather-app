@@ -23,7 +23,7 @@ const WEATHER_QUERY_PARAMS = {
     'sunset',
     'precipitation_probability_max',
   ],
-  timezone: 'auto',
+  forecast_hours: 25,
 };
 
 const GEO_QUERY_PARAMS = {
@@ -66,6 +66,7 @@ const getWeatherData = async city => {
   const url = generateURL(weatherApiUrl, {
     latitude: geolocationData.results[0].latitude,
     longitude: geolocationData.results[0].longitude,
+    timezone: geolocationData.results[0].timezone,
     ...WEATHER_QUERY_PARAMS,
   });
   const weatherData = await getDataFromAPI(url);
@@ -80,6 +81,7 @@ const adaptWeatherData = data => {
 
   const parsedData = {
     current: {
+      time: new Date(current.time),
       temp: Math.round(current.temperature_2m),
       apparentTemp: Math.round(current.apparent_temperature),
       isDay: current.is_day,
@@ -87,25 +89,24 @@ const adaptWeatherData = data => {
       weatherCode: current.weather_code,
       windSpeed: Math.round(current.wind_speed_10m),
       windDirection: Math.round(current.wind_direction_10m),
-      precipitation: Math.round(current.precipitation),
     },
-    hourly: hourly.time.map((time, index) => {
+    hourly: hourly.time.slice(1).map((time, i) => {
       return {
-        time,
-        temp: Math.round(hourly.temperature_2m[index]),
-        apparentTemp: Math.round(hourly.apparent_temperature[index]),
-        precipitation: Math.round(hourly.precipitation_probability[index]),
-        weatherCode: hourly.weather_code,
+        time: new Date(time),
+        temp: Math.round(hourly.temperature_2m[i]),
+        apparentTemp: Math.round(hourly.apparent_temperature[i]),
+        precipitation: Math.round(hourly.precipitation_probability[i]),
+        weatherCode: hourly.weather_code[i],
       };
     }),
-    daily: daily.time.map((time, index) => {
+    daily: daily.time.map((time, i) => {
       return {
         time,
-        tempMax: Math.round(daily.temperature_2m_max[index]),
-        tempMin: Math.round(daily.temperature_2m_min[index]),
-        precipitation: Math.round(daily.precipitation_probability_max[index]),
-        sunrise: daily.sunrise[index],
-        sunset: daily.sunset[index],
+        tempMax: Math.round(daily.temperature_2m_max[i]),
+        tempMin: Math.round(daily.temperature_2m_min[i]),
+        precipitation: Math.round(daily.precipitation_probability_max[i]),
+        sunrise: daily.sunrise[i],
+        sunset: daily.sunset[i],
         weatherCode: daily.weather_code,
       };
     }),
