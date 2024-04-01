@@ -1,4 +1,4 @@
-import getWeatherData, { getGeocodingData } from './api.js';
+import { getAirQualityData, getGeocodingData, getWeatherData } from './api.js';
 import { getDescription, getIcon } from './weather-codes.js';
 
 const dayNames = new Map();
@@ -11,14 +11,61 @@ dayNames.set(4, 'Thursday');
 dayNames.set(5, 'Friday');
 dayNames.set(6, 'Saturday');
 
+const uvIndicesScale = new Map();
+uvIndicesScale.set(0, 'Low');
+uvIndicesScale.set(1, 'Low');
+uvIndicesScale.set(2, 'Low');
+uvIndicesScale.set(3, 'Moderate');
+uvIndicesScale.set(4, 'Moderate');
+uvIndicesScale.set(5, 'Moderate');
+uvIndicesScale.set(6, 'High');
+uvIndicesScale.set(7, 'High');
+uvIndicesScale.set(8, 'Very high');
+uvIndicesScale.set(9, 'Very high');
+uvIndicesScale.set(10, 'Very high');
+uvIndicesScale.set(11, 'Extreme');
+
+const uvIndices = {
+  scale: uvIndicesScale,
+  maxValue: 11,
+  getDescr(uvIndex) {
+    return uvIndex > this.maxValue
+      ? this.scale.get(this.maxValue)
+      : this.scale.get(uvIndex);
+  },
+};
+
+const aqiScale = new Map();
+aqiScale.set(0, 'Good');
+aqiScale.set(20, 'Fair');
+aqiScale.set(40, 'Moderate');
+aqiScale.set(60, 'Poor');
+aqiScale.set(80, 'Very poor');
+aqiScale.set(100, 'Expremely poor');
+
+const aqiLevels = {
+  levels: aqiScale,
+  getDescr(aqi) {
+    const entriesArray = [...this.levels.entries()].reverse();
+    for (const [level, descr] of entriesArray) {
+      if (aqi >= level) {
+        return descr;
+      }
+    }
+    return 'Unknown';
+  },
+};
+
 let searchResults = [];
+let airQuialityData = {};
 
 const resultsEl = document.querySelector('[data-search-results]');
 const cityNameEl = document.querySelector('[data-city-name]');
 const cityOtherEl = document.querySelector('[data-city-other]');
-const currentSectionEl = document.querySelector('[data-current-section]');
-const hourlySectionEl = document.querySelector('[data-hourly-section]');
-const dailySectionEl = document.querySelector('[data-daily-section]');
+const currentSectionEl = document.querySelector('#current-section');
+const hourlySectionEl = document.querySelector('#hourly-section');
+const dailySectionEl = document.querySelector('#daily-section');
+const currentOtherSectionEl = document.querySelector('#current-other-section');
 const formEl = document.querySelector('.search-form');
 const searchInputEl = document.querySelector('#search-input');
 
@@ -26,6 +73,7 @@ const render = async (city, weatherData) => {
   renderCurrentSection(city, weatherData.current);
   renderHourlySection(weatherData.hourly);
   renderDailySection(weatherData.daily);
+  renderCurrentOtherSection(weatherData.current);
 };
 
 const renderCurrentSection = (city, weatherData) => {
@@ -64,6 +112,22 @@ const renderDailySection = data => {
     setValue(dailySectionEl, `[data-temp-max-${i}]`, day.tempMax);
     setValue(dailySectionEl, `[data-temp-min-${i}]`, day.tempMin);
   });
+};
+
+const renderCurrentOtherSection = data => {
+  currentOtherSectionEl.classList.remove('hidden');
+
+  const uvIndex = uvIndices.getDescr(data.uvIndex);
+  const aqi = `${aqiLevels.getDescr(airQuialityData.aqi)} (${
+    airQuialityData.aqi
+  })`;
+  setValue(currentOtherSectionEl, '[data-aqi]', aqi);
+  setValue(currentOtherSectionEl, '[data-uv-index]', uvIndex);
+  setValue(currentOtherSectionEl, '[data-humidity]', data.humidity);
+  setValue(currentOtherSectionEl, '[data-wind]', data.windSpeed);
+  setValue(currentOtherSectionEl, '[data-dew-point]', data.dewPoint);
+  setValue(currentOtherSectionEl, '[data-pressure]', data.surfacePressure);
+  setValue(currentOtherSectionEl, '[data-visibility]', data.visibility);
 };
 
 const getDayName = date => {
@@ -163,6 +227,7 @@ const init = async () => {
         city.longitude,
         city.timezone
       );
+      airQuialityData = await getAirQualityData(city.latitude, city.longitude);
       render(city, weatherData);
     }
   });

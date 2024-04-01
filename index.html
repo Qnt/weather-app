@@ -206,10 +206,42 @@
           </div>
         </div>
       </section>
-      <section id="current-other-section">
-        <!-- <div class="wrapper"> -->
+      <section id="current-other-section" class="hidden">
+        <div class="current-other-wrapper">
+          <div class="aqi card">
+            <p class="title">AQI</p>
+            <p class="value" data-aqi></p>
+          </div>
+          <div class="uv-index card">
+            <p class="title">UV index</p>
+            <p class="value" data-uv-index></p>
+          </div>
+          <div class="humidity card">
+            <p class="title">Humidity</p>
+            <p class="value"><span data-humidity></span>%</p>
+          </div>
+          <div class="wind card">
+            <p class="title">Wind</p>
+            <p class="value"><span data-wind></span> km/h</p>
+          </div>
+          <div class="dew-point card">
+            <p class="title">Dew point</p>
+            <p class="value"><span data-dew-point></span>&deg;</p>
+          </div>
+          <div class="pressure card">
+            <p class="title">Pressure</p>
+            <p class="value"><span data-pressure></span> mb</p>
+          </div>
+          <div class="visibility card">
+            <p class="title">Visibility</p>
+            <p class="value"><span data-visibility></span> km</p>
+          </div>
+          <!-- <div class="daylight card"></div> -->
         </div>
       </section>
     </main>
+    <footer class="footer">
+      <p>Built with <a href="https://open-meteo.com">Open Meteo API.</a></p>
+    </footer>
   </body>
 </html>

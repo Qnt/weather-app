@@ -7,6 +7,10 @@ const WEATHER_QUERY_PARAMS = {
     'weather_code',
     'wind_speed_10m',
     'wind_direction_10m',
+    'surface_pressure',
+    'visibility',
+    'uv_index',
+    'dew_point_2m',
   ],
   hourly: [
     'temperature_2m',
@@ -27,14 +31,20 @@ const WEATHER_QUERY_PARAMS = {
   forecast_hours: 25,
 };
 
-const GEO_QUERY_PARAMS = {
+const GEOCODING_QUERY_PARAMS = {
   count: 5,
   language: 'en',
   format: 'json',
 };
 
-const geoApiUrl = 'https://geocoding-api.open-meteo.com/v1/search';
+const AIR_QUALITY_QUERY_PARAMS = {
+  current: 'european_aqi',
+};
+
+const geocodingApiUrl = 'https://geocoding-api.open-meteo.com/v1/search';
 const weatherApiUrl = 'https://api.open-meteo.com/v1/forecast';
+const airQualityApiUrl =
+  'https://air-quality-api.open-meteo.com/v1/air-quality?';
 
 const getDataFromAPI = async url => {
   try {
@@ -57,14 +67,27 @@ const generateURL = (url, queryParams) => {
   return resultURL;
 };
 
+export const getAirQualityData = async (latitude, longitude) => {
+  const url = generateURL(airQualityApiUrl, {
+    latitude,
+    longitude,
+    ...AIR_QUALITY_QUERY_PARAMS,
+  });
+
+  const airQuialityData = await getDataFromAPI(url);
+  const adaptedAirQualityData = adaptAirQualityData(airQuialityData);
+
+  return adaptedAirQualityData;
+};
+
 export const getGeocodingData = async name => {
-  const url = generateURL(geoApiUrl, { name, ...GEO_QUERY_PARAMS });
+  const url = generateURL(geocodingApiUrl, { name, ...GEOCODING_QUERY_PARAMS });
   const geocodingData = await getDataFromAPI(url);
   const adaptedGeocodingData = adaptGeolocationData(geocodingData);
   return adaptedGeocodingData;
 };
 
-const getWeatherData = async (latitude, longitude, timezone) => {
+export const getWeatherData = async (latitude, longitude, timezone) => {
   const url = generateURL(weatherApiUrl, {
     latitude,
     longitude,
@@ -79,6 +102,16 @@ const getWeatherData = async (latitude, longitude, timezone) => {
 const adaptGeolocationData = data => {
   if (data.results) {
     return data.results;
+  }
+
+  return [];
+};
+
+const adaptAirQualityData = data => {
+  if (data.current) {
+    return {
+      aqi: data.current.european_aqi,
+    };
   }
 
   return [];
@@ -99,6 +132,11 @@ const adaptWeatherData = data => {
       weatherCode: current.weather_code,
       windSpeed: Math.round(current.wind_speed_10m),
       windDirection: Math.round(current.wind_direction_10m),
+      surfacePressure: current.surface_pressure,
+      dewPoint: Math.round(current.dew_point_2m),
+      humidity: current.relative_humidity_2m,
+      uvIndex: Math.round(current.uv_index),
+      visibility: current.visibility / 1000,
     },
     hourly: hourly.time.slice(1).map((time, i) => {
       return {
@@ -125,5 +163,3 @@ const adaptWeatherData = data => {
 
   return parsedData;
 };
-
-export default getWeatherData;
