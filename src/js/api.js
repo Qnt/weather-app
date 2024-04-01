@@ -28,7 +28,7 @@ const WEATHER_QUERY_PARAMS = {
 };
 
 const GEO_QUERY_PARAMS = {
-  count: 10,
+  count: 5,
   language: 'en',
   format: 'json',
 };
@@ -57,22 +57,31 @@ const generateURL = (url, queryParams) => {
   return resultURL;
 };
 
-const getGeolocationData = async name => {
+export const getGeocodingData = async name => {
   const url = generateURL(geoApiUrl, { name, ...GEO_QUERY_PARAMS });
-  return await getDataFromAPI(url);
+  const geocodingData = await getDataFromAPI(url);
+  const adaptedGeocodingData = adaptGeolocationData(geocodingData);
+  return adaptedGeocodingData;
 };
 
-const getWeatherData = async city => {
-  const geolocationData = await getGeolocationData(city);
+const getWeatherData = async (latitude, longitude, timezone) => {
   const url = generateURL(weatherApiUrl, {
-    latitude: geolocationData.results[0].latitude,
-    longitude: geolocationData.results[0].longitude,
-    timezone: geolocationData.results[0].timezone,
+    latitude,
+    longitude,
+    timezone,
     ...WEATHER_QUERY_PARAMS,
   });
   const weatherData = await getDataFromAPI(url);
 
   return adaptWeatherData(weatherData);
+};
+
+const adaptGeolocationData = data => {
+  if (data.results) {
+    return data.results;
+  }
+
+  return [];
 };
 
 const adaptWeatherData = data => {

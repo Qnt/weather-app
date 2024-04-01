@@ -17,27 +17,47 @@
     <header></header>
     <main>
       <section id="search-section">
-        <form class="search-form">
-          <label class="search-label">
-            <p class="search-title">Search</p>
-            <img src="./src/assets/icons/search-svgrepo-com.svg" alt="Search" />
-            <input type="search" id="search-input" placeholder="City name" />
-          </label>
-        </form>
-      </section>
-      <section id="current-section" data-current-section>
-        <div class="current-wrapper">
-          <div class="temp">
-            <h1 class="current-temp"><span data-temp>18</span>&deg;</h1>
-            <p class="descr" data-descr>Partly cloudy</p>
-            <p class="apparent-temp">
-              Feels like <span data-apparent-temp>18</span>&deg;
-            </p>
-          </div>
-          <img src="" alt="" class="icon" data-icon />
+        <div class="search-container">
+          <form class="search-form">
+            <label class="search-label">
+              <p class="search-title">Search</p>
+              <img
+                src="./src/assets/icons/search-svgrepo-com.svg"
+                alt="Search"
+              />
+              <input
+                type="text"
+                id="search-input"
+                placeholder="Enter city name"
+                maxlength="30"
+                required
+              />
+            </label>
+          </form>
+          <ul class="search-results hidden" data-search-results></ul>
         </div>
       </section>
-      <section id="hourly-section" data-hourly-section>
+      <section id="current-section" class="hidden" data-current-section>
+        <div class="current-wrapper">
+          <div class="location">
+            <h2 class="city-name" data-city-name>Ufa</h2>
+            <p class="city-other" data-city-other>
+              Russia, Bashkortostan Republic
+            </p>
+          </div>
+          <div class="current-temp-icon">
+            <div class="temp">
+              <h1 class="current-temp"><span data-temp>18</span>&deg;</h1>
+              <p class="descr" data-descr>Partly cloudy</p>
+              <p class="apparent-temp">
+                Feels like <span data-apparent-temp>18</span>&deg;
+              </p>
+            </div>
+            <img src="" alt="" class="icon" data-icon />
+          </div>
+        </div>
+      </section>
+      <section id="hourly-section" class="hidden" data-hourly-section>
         <div class="card">
           <div class="hourly">
             <p class="time" data-time-0>12:00</p>
@@ -139,7 +159,7 @@
           </div>
         </div>
       </section>
-      <section id="daily-section" data-daily-section>
+      <section id="daily-section" class="hidden" data-daily-section>
         <div class="card">
           <div class="daily">
             <p class="day" data-day-0>ligma</p>
@@ -186,7 +206,10 @@
           </div>
         </div>
       </section>
-      <section id="current-other-section"></section>
+      <section id="current-other-section">
+        <!-- <div class="wrapper"> -->
+        </div>
+      </section>
     </main>
   </body>
 </html>
