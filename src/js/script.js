@@ -12,6 +12,7 @@ let weatherData = {};
 let airQuialityData = {};
 let city = {};
 
+const headerEl = document.querySelector('.header');
 const resultsEl = document.querySelector('[data-search-results]');
 const cityNameEl = document.querySelector('[data-city-name]');
 const cityOtherEl = document.querySelector('[data-city-other]');
@@ -23,11 +24,16 @@ const formEl = document.querySelector('.search-form');
 const searchInputEl = document.querySelector('#search-input');
 
 const render = async () => {
+  hideHeader();
   cleanUpInput();
   renderCurrentSection();
   renderHourlySection();
   renderDailySection();
   renderCurrentOtherSection();
+};
+
+const hideHeader = () => {
+  headerEl.classList.add('hidden');
 };
 
 const cleanUpInput = () => {
@@ -166,7 +172,7 @@ const init = async () => {
     }, 100);
   });
   searchInputEl.addEventListener('focus', event => {
-    if (event.target.value) {
+    if (event.target.value && searchResults.length) {
       resultsEl.classList.remove('hidden');
     }
   });
