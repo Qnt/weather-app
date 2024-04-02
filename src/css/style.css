@@ -259,7 +259,7 @@ main {
 .precip::before {
   display: inline-block;
   content: '';
-  background-image: url('/src/assets/icons/droplet-svgrepo-com.svg');
+  background-image: url('./src/assets/icons/droplet-svgrepo-com.svg');
   background-repeat: no-repeat;
   background-size: contain;
   width: 0.8rem;
