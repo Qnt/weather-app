@@ -13,7 +13,7 @@ let airQuialityData = {};
 let city = {};
 
 const headerEl = document.querySelector('.header');
-const resultsEl = document.querySelector('[data-search-results]');
+const searchResultsEl = document.querySelector('[data-search-results]');
 const cityNameEl = document.querySelector('[data-city-name]');
 const cityOtherEl = document.querySelector('[data-city-other]');
 const currentSectionEl = document.querySelector('#current-section');
@@ -24,16 +24,12 @@ const formEl = document.querySelector('.search-form');
 const searchInputEl = document.querySelector('#search-input');
 
 const render = async () => {
-  hideHeader();
+  headerEl.classList.add('hidden');
   cleanUpInput();
   renderCurrentSection();
   renderHourlySection();
   renderDailySection();
   renderCurrentOtherSection();
-};
-
-const hideHeader = () => {
-  headerEl.classList.add('hidden');
 };
 
 const cleanUpInput = () => {
@@ -113,12 +109,12 @@ const handleSearch = async event => {
 };
 
 const renderSearchResults = () => {
-  resultsEl.replaceChildren();
+  searchResultsEl.replaceChildren();
   if (searchResults.length === 0) {
-    resultsEl.classList.add('hidden');
+    searchResultsEl.classList.add('hidden');
     return;
   }
-  resultsEl.classList.remove('hidden');
+  searchResultsEl.classList.remove('hidden');
   searchResults.forEach((city, i) => {
     const liEl = document.createElement('li');
     const cityNameEl = document.createElement('p');
@@ -136,7 +132,7 @@ const renderSearchResults = () => {
     cityOtherEl.textContent = other.join(', ');
 
     liEl.append(cityNameEl, cityOtherEl);
-    resultsEl.appendChild(liEl);
+    searchResultsEl.appendChild(liEl);
   });
 };
 
@@ -162,21 +158,27 @@ const debounce = (callee, delay) => {
 const handleSearchDebounced = debounce(handleSearch, 1000);
 
 const init = async () => {
+  formEl.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      cleanUpInput();
+      searchResultsEl.classList.add('hidden');
+    }
+  });
   formEl.addEventListener('submit', event => {
     event.preventDefault();
   });
   searchInputEl.addEventListener('input', handleSearchDebounced);
   searchInputEl.addEventListener('blur', () => {
     setTimeout(() => {
-      resultsEl.classList.add('hidden');
+      searchResultsEl.classList.add('hidden');
     }, 100);
   });
   searchInputEl.addEventListener('focus', event => {
     if (event.target.value && searchResults.length) {
-      resultsEl.classList.remove('hidden');
+      searchResultsEl.classList.remove('hidden');
     }
   });
-  resultsEl.addEventListener('click', async event => {
+  searchResultsEl.addEventListener('click', async event => {
     if (
       event.target.tagName === 'LI' ||
       event.target.parentElement.tagName === 'LI'
