@@ -25,15 +25,12 @@ const searchInputEl = document.querySelector('#search-input');
 
 const render = async () => {
   headerEl.classList.add('hidden');
-  cleanUpInput();
+  searchInputEl.value = '';
+  searchInputEl.classList.remove('search-input-shadow');
   renderCurrentSection();
   renderHourlySection();
   renderDailySection();
   renderCurrentOtherSection();
-};
-
-const cleanUpInput = () => {
-  searchInputEl.value = '';
 };
 
 const renderCurrentSection = () => {
@@ -171,7 +168,7 @@ const init = async () => {
   searchInputEl.addEventListener('blur', () => {
     setTimeout(() => {
       searchResultsEl.classList.add('hidden');
-    }, 100);
+    }, 300);
   });
   searchInputEl.addEventListener('focus', event => {
     if (event.target.value && searchResults.length) {
