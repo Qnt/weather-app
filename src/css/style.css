@@ -1,15 +1,16 @@
 @import 'https://unpkg.com/open-props';
 
 :root {
-  --bg-color: #38bdf8;
-  --bg-color-card: 200 98% 39%;
+  --bg-color-card: 200deg 98% 39%;
   --bg-color-search: white;
+  --bg-color-track: 198deg 97% 40%;
+  --bg-color-thumb: 198deg 97% 75%;
   --text-color-secondary: #75d6ff;
-  --shadow-color: 200deg 100% 22%;
-  --shadow: 0.3px 0.5px 0.7px hsl(var(--shadow-color) / 0.36),
-    0.8px 1.6px 2px -0.8px hsl(var(--shadow-color) / 0.36),
-    2.1px 4.1px 5.2px -1.7px hsl(var(--shadow-color) / 0.36),
-    5px 10px 12.6px -2.5px hsl(var(--shadow-color) / 0.36);
+  --bg-gradient: 0deg, hsl(198deg 97% 49%) 0%, hsl(200deg 92% 56%) 26%,
+    hsl(201deg 92% 59%) 37%, hsl(201deg 91% 62%) 45%, hsl(201deg 91% 65%) 53%,
+    hsl(201deg 91% 67%) 59%, hsl(201deg 92% 70%) 66%, hsl(200deg 92% 72%) 72%,
+    hsl(200deg 92% 74%) 78%, hsl(199deg 92% 76%) 85%, hsl(199deg 93% 78%) 92%,
+    hsl(199deg 94% 80%) 100%;
 }
 
 *,
@@ -18,6 +19,35 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+::-webkit-scrollbar {
+  background: transparent;
+  width: 0.75rem;
+}
+
+body::-webkit-scrollbar-track {
+  background: hsl(var(--bg-color-track) / 1);
+}
+
+body::-webkit-scrollbar-thumb {
+  border-radius: var(--radius-round);
+  border: 2px solid hsl(var(--bg-color-track) / 1);
+  background: hsl(var(--bg-color-thumb) / 1);
+}
+
+.hourly::-webkit-scrollbar {
+  background: transparent;
+  height: var(--size-2);
+}
+
+.hourly::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hourly::-webkit-scrollbar-thumb {
+  border-radius: var(--radius-round);
+  background: hsl(var(--bg-color-thumb) / 1);
 }
 
 ul,
@@ -40,7 +70,7 @@ body {
   justify-content: center;
   gap: var(--size-2);
   line-height: var(--font-lineheight-3);
-  background: var(--bg-color);
+  background-image: linear-gradient(var(--bg-gradient));
   padding: var(--size-2);
   max-width: var(--size-content-3);
   min-height: 100vh;
@@ -51,6 +81,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.header h1 {
+  font-size: var(--font-size-8);
 }
 
 main {
@@ -66,7 +100,6 @@ main {
   justify-content: flex-start;
   font-size: var(--font-size-fluid-1);
   position: relative;
-  z-index: 100;
 }
 
 .search-label {
@@ -103,6 +136,14 @@ main {
   text-indent: var(--size-5);
 }
 
+.search-form input:focus-visible {
+  outline: 2px solid hsl(var(--bg-color-card) / 0.5);
+}
+
+.search-input-shadow {
+  box-shadow: var(--shadow-2);
+}
+
 .search-results {
   display: flex;
   flex-direction: column;
@@ -112,11 +153,13 @@ main {
   position: absolute;
   z-index: 10;
   width: 100%;
-  padding-top: 3rem;
+  top: var(--size-4);
+  padding-top: var(--size-6);
   padding-bottom: var(--size-2);
   background-color: var(--bg-color-search);
-  border-radius: var(--radius-3);
-  box-shadow: var(--shadow);
+  border-bottom-right-radius: var(--radius-3);
+  border-bottom-left-radius: var(--radius-3);
+  box-shadow: var(--shadow-3);
 }
 
 .search-results li {
@@ -171,7 +214,7 @@ main {
 }
 
 .card {
-  background-color: hsl(var(--bg-color-card) / 0.5);
+  background-color: hsl(var(--bg-color-card) / 0.4);
   border-radius: var(--radius-3);
   padding: var(--size-3);
 }
