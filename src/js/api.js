@@ -118,9 +118,9 @@ const adaptAirQualityData = data => {
 };
 
 const adaptWeatherData = data => {
-  const current = data.current;
-  const hourly = data.hourly;
-  const daily = data.daily;
+  const current = data?.current;
+  const hourly = data?.hourly;
+  const daily = data?.daily;
 
   const parsedData = {
     current: {
@@ -154,8 +154,8 @@ const adaptWeatherData = data => {
         tempMax: Math.round(daily.temperature_2m_max[i]),
         tempMin: Math.round(daily.temperature_2m_min[i]),
         precipitation: Math.round(daily.precipitation_probability_max[i]),
-        sunrise: daily.sunrise[i],
-        sunset: daily.sunset[i],
+        sunrise: new Date(daily.sunrise[i]),
+        sunset: new Date(daily.sunset[i]),
         weatherCode: daily.weather_code[i],
       };
     }),

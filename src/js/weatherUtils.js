@@ -212,4 +212,59 @@ const getIcon = (code, isDay = 1) => {
   return weatherCodes[code].icon[timeOfDay];
 };
 
-export { getDescription, getIcon };
+const dayNames = new Map();
+
+dayNames.set(0, 'Sunday');
+dayNames.set(1, 'Monday');
+dayNames.set(2, 'Tuesday');
+dayNames.set(3, 'Wednesday');
+dayNames.set(4, 'Thursday');
+dayNames.set(5, 'Friday');
+dayNames.set(6, 'Saturday');
+
+const uvIndicesScale = new Map();
+uvIndicesScale.set(0, 'Low');
+uvIndicesScale.set(1, 'Low');
+uvIndicesScale.set(2, 'Low');
+uvIndicesScale.set(3, 'Moderate');
+uvIndicesScale.set(4, 'Moderate');
+uvIndicesScale.set(5, 'Moderate');
+uvIndicesScale.set(6, 'High');
+uvIndicesScale.set(7, 'High');
+uvIndicesScale.set(8, 'Very high');
+uvIndicesScale.set(9, 'Very high');
+uvIndicesScale.set(10, 'Very high');
+uvIndicesScale.set(11, 'Extreme');
+
+const uvIndices = {
+  scale: uvIndicesScale,
+  maxValue: 11,
+  getDescr(uvIndex) {
+    return uvIndex > this.maxValue
+      ? this.scale.get(this.maxValue)
+      : this.scale.get(uvIndex);
+  },
+};
+
+const aqiScale = new Map();
+aqiScale.set(0, 'Good');
+aqiScale.set(20, 'Fair');
+aqiScale.set(40, 'Moderate');
+aqiScale.set(60, 'Poor');
+aqiScale.set(80, 'Very poor');
+aqiScale.set(100, 'Expremely poor');
+
+const aqiLevels = {
+  levels: aqiScale,
+  getDescr(aqi) {
+    const entriesArray = [...this.levels.entries()].reverse();
+    for (const [level, descr] of entriesArray) {
+      if (aqi >= level) {
+        return descr;
+      }
+    }
+    return 'Unknown';
+  },
+};
+
+export { aqiLevels, dayNames, getDescription, getIcon, uvIndices };

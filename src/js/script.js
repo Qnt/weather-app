@@ -1,63 +1,16 @@
 import { getAirQualityData, getGeocodingData, getWeatherData } from './api.js';
-import { getDescription, getIcon } from './weather-codes.js';
-
-const dayNames = new Map();
-
-dayNames.set(0, 'Sunday');
-dayNames.set(1, 'Monday');
-dayNames.set(2, 'Tuesday');
-dayNames.set(3, 'Wednesday');
-dayNames.set(4, 'Thursday');
-dayNames.set(5, 'Friday');
-dayNames.set(6, 'Saturday');
-
-const uvIndicesScale = new Map();
-uvIndicesScale.set(0, 'Low');
-uvIndicesScale.set(1, 'Low');
-uvIndicesScale.set(2, 'Low');
-uvIndicesScale.set(3, 'Moderate');
-uvIndicesScale.set(4, 'Moderate');
-uvIndicesScale.set(5, 'Moderate');
-uvIndicesScale.set(6, 'High');
-uvIndicesScale.set(7, 'High');
-uvIndicesScale.set(8, 'Very high');
-uvIndicesScale.set(9, 'Very high');
-uvIndicesScale.set(10, 'Very high');
-uvIndicesScale.set(11, 'Extreme');
-
-const uvIndices = {
-  scale: uvIndicesScale,
-  maxValue: 11,
-  getDescr(uvIndex) {
-    return uvIndex > this.maxValue
-      ? this.scale.get(this.maxValue)
-      : this.scale.get(uvIndex);
-  },
-};
-
-const aqiScale = new Map();
-aqiScale.set(0, 'Good');
-aqiScale.set(20, 'Fair');
-aqiScale.set(40, 'Moderate');
-aqiScale.set(60, 'Poor');
-aqiScale.set(80, 'Very poor');
-aqiScale.set(100, 'Expremely poor');
-
-const aqiLevels = {
-  levels: aqiScale,
-  getDescr(aqi) {
-    const entriesArray = [...this.levels.entries()].reverse();
-    for (const [level, descr] of entriesArray) {
-      if (aqi >= level) {
-        return descr;
-      }
-    }
-    return 'Unknown';
-  },
-};
+import {
+  aqiLevels,
+  dayNames,
+  getDescription,
+  getIcon,
+  uvIndices,
+} from './weatherUtils.js';
 
 let searchResults = [];
+let weatherData = {};
 let airQuialityData = {};
+let city = {};
 
 const resultsEl = document.querySelector('[data-search-results]');
 const cityNameEl = document.querySelector('[data-city-name]');
@@ -69,28 +22,34 @@ const currentOtherSectionEl = document.querySelector('#current-other-section');
 const formEl = document.querySelector('.search-form');
 const searchInputEl = document.querySelector('#search-input');
 
-const render = async (city, weatherData) => {
-  renderCurrentSection(city, weatherData.current);
-  renderHourlySection(weatherData.hourly);
-  renderDailySection(weatherData.daily);
-  renderCurrentOtherSection(weatherData.current);
+const render = async () => {
+  cleanUpInput();
+  renderCurrentSection();
+  renderHourlySection();
+  renderDailySection();
+  renderCurrentOtherSection();
 };
 
-const renderCurrentSection = (city, weatherData) => {
+const cleanUpInput = () => {
+  searchInputEl.value = '';
+};
+
+const renderCurrentSection = () => {
+  const current = weatherData.current;
   currentSectionEl.classList.remove('hidden');
   cityNameEl.textContent = getCityName(city);
   cityOtherEl.textContent = getCityOther(city).join(', ');
-  const descr = getDescription(weatherData.weatherCode);
-  const icon = getIcon(weatherData.weatherCode, weatherData.isDay);
+  const descr = getDescription(current.weatherCode);
+  const icon = getIcon(current.weatherCode, current.isDay);
   currentSectionEl.querySelector('[data-icon]').setAttribute('src', icon);
-  setValue(currentSectionEl, '[data-temp]', weatherData.temp);
+  setValue(currentSectionEl, '[data-temp]', current.temp);
   setValue(currentSectionEl, '[data-descr]', descr);
-  setValue(currentSectionEl, '[data-apparent-temp]', weatherData.apparentTemp);
+  setValue(currentSectionEl, '[data-apparent-temp]', current.apparentTemp);
 };
 
-const renderHourlySection = data => {
+const renderHourlySection = () => {
   hourlySectionEl.classList.remove('hidden');
-  data.forEach((hour, i) => {
+  weatherData.hourly.forEach((hour, i) => {
     const icon = getIcon(hour.weatherCode, hour.isDay);
     hourlySectionEl.querySelector(`[data-icon-${i}]`).setAttribute('src', icon);
     const hourValue = hour.time.getHours().toString();
@@ -101,9 +60,9 @@ const renderHourlySection = data => {
   });
 };
 
-const renderDailySection = data => {
+const renderDailySection = () => {
   dailySectionEl.classList.remove('hidden');
-  data.forEach((day, i) => {
+  weatherData.daily.forEach((day, i) => {
     const icon = getIcon(day.weatherCode);
     dailySectionEl.querySelector(`[data-icon-${i}]`).setAttribute('src', icon);
     const dayName = i === 0 ? 'Today' : getDayName(day.time);
@@ -114,20 +73,21 @@ const renderDailySection = data => {
   });
 };
 
-const renderCurrentOtherSection = data => {
+const renderCurrentOtherSection = () => {
   currentOtherSectionEl.classList.remove('hidden');
+  const current = weatherData.current;
 
-  const uvIndex = uvIndices.getDescr(data.uvIndex);
+  const uvIndex = uvIndices.getDescr(current.uvIndex);
   const aqi = `${aqiLevels.getDescr(airQuialityData.aqi)} (${
     airQuialityData.aqi
   })`;
   setValue(currentOtherSectionEl, '[data-aqi]', aqi);
   setValue(currentOtherSectionEl, '[data-uv-index]', uvIndex);
-  setValue(currentOtherSectionEl, '[data-humidity]', data.humidity);
-  setValue(currentOtherSectionEl, '[data-wind]', data.windSpeed);
-  setValue(currentOtherSectionEl, '[data-dew-point]', data.dewPoint);
-  setValue(currentOtherSectionEl, '[data-pressure]', data.surfacePressure);
-  setValue(currentOtherSectionEl, '[data-visibility]', data.visibility);
+  setValue(currentOtherSectionEl, '[data-humidity]', current.humidity);
+  setValue(currentOtherSectionEl, '[data-wind]', current.windSpeed);
+  setValue(currentOtherSectionEl, '[data-dew-point]', current.dewPoint);
+  setValue(currentOtherSectionEl, '[data-pressure]', current.surfacePressure);
+  setValue(currentOtherSectionEl, '[data-visibility]', current.visibility);
 };
 
 const getDayName = date => {
@@ -142,7 +102,6 @@ const setValue = (parent, dataAttr, value) => {
 
 const handleSearch = async event => {
   const value = event.target.value;
-  console.log(value);
   searchResults = await getGeocodingData(value);
   renderSearchResults();
 };
@@ -221,14 +180,14 @@ const init = async () => {
           ? event.target
           : event.target.parentElement;
       const indexInSearchResults = liEl.id.split('-')[1];
-      const city = searchResults[indexInSearchResults];
-      const weatherData = await getWeatherData(
+      city = searchResults[indexInSearchResults];
+      weatherData = await getWeatherData(
         city.latitude,
         city.longitude,
         city.timezone
       );
       airQuialityData = await getAirQualityData(city.latitude, city.longitude);
-      render(city, weatherData);
+      render(weatherData);
     }
   });
 };
